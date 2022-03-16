@@ -42,23 +42,23 @@
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <i class="layui-icon layui-icon-username"></i>
-                        <input type="text" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                        <input type="text" name="username" lay-verify="required|username" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <i class="layui-icon layui-icon-password"></i>
-                        <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                        <input type="password" name="password" lay-verify="required|pwd" placeholder="请输入密码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <i class="layui-icon layui-icon-password"></i>
-                        <input type="password" name="repassword" lay-verify="required" placeholder="请重复密码" autocomplete="off" class="layui-input">
+                        <input type="password" name="repassword" lay-verify="required|repwd" placeholder="请重复密码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid layui-btn-normal">注册</button>
+                    <button class="layui-btn layui-btn-fluid layui-btn-normal" lay-submit>注册</button>
                 </div>
                 <div class="layui-form-item">
                     <a href="javascript:;" id="btn-login">去登录</a>

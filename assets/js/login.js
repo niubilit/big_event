@@ -1,20 +1,32 @@
 $(function() {
-    const getUser = function() {
+    const getUser = function(cls) {
         return {
-            username: $('.loginBox [name="username"]').val(),
-            password: $('.loginBox [name="password"]').val()
+            username: $('.' + cls + ' [name="username"]').val(),
+            password: $('.' + cls + ' [name="password"]').val()
         }
     }
     $('#login').on('submit', (even) => {
-        even.preventDefault();
         $.ajax({
             type: "post",
             url: "/api/login",
-            data: getUser(),
+            data: getUser('loginBox'),
             success: function(response) {
                 console.log(response);
             }
         });
+        even.preventDefault();
+    });
+    $('#register').on('submit', (even) => {
+        $.ajax({
+            type: "post",
+            url: "/api/register",
+            data: getUser('regBox'),
+            success: function(response) {
+                console.log(response);
+                layer.msg('注册成功')
+            }
+        });
+        even.preventDefault();
     });
 
     $('#btn-reg').on('click', () => {
