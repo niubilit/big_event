@@ -11,10 +11,16 @@ $(function() {
             url: "/api/login",
             data: getUser('loginBox'),
             success: function(response) {
-                console.log(response);
+                if (response.status != 0) {
+                    return layer.msg(response.msg, { time: 2000 });
+                }
+                layer.msg(response.msg, { time: 2000 }, function() {
+                    location.href = '../../index.html';
+                });
             }
         });
         even.preventDefault();
+        return false;
     });
     $('#register').on('submit', (even) => {
         $.ajax({
@@ -23,7 +29,9 @@ $(function() {
             data: getUser('regBox'),
             success: function(response) {
                 console.log(response);
-                layer.msg('注册成功')
+                layer.msg('注册成功', { time: 2000 }, function() {
+                    $('#btn-login').click();
+                })
             }
         });
         even.preventDefault();

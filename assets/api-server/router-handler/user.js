@@ -1,6 +1,7 @@
 const dp = require('../dp/index');
 const briypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const config = require('../schema/config');
 exports.login = function(req, res) {
     const body = req.body;
     const strQuery = `select * from ev_users where username = ?`;
@@ -13,7 +14,7 @@ exports.login = function(req, res) {
         res.send({
             status: 0,
             msg: '登陆成功',
-            token: 'Bearer ' + tokenStr
+            token: 'Bearer ' + jwt.sign(user, config.jwtSecretKey, { expiresIn: config.expiresIn })
         });
     });
 }
