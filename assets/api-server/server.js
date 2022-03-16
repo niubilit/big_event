@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const userRouter = require('./router/user.js');
-const expressJoi = require('@escook/express-joi');
-const { reg_login_schema } = require('./schema/user');
 const joi = require('joi');
 
 app.use(cors());
@@ -18,7 +16,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.use('/bigEvent/api/', expressJoi(reg_login_schema), userRouter);
+app.use('/bigEvent/api/', userRouter);
 
 app.use((err, req, res, next) => {
     if (err instanceof joi.ValidationError) {

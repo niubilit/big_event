@@ -1,16 +1,20 @@
 const dp = require('../dp/index');
 const briypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 exports.login = function(req, res) {
     const body = req.body;
     const strQuery = `select * from ev_users where username = ?`;
     dp.query(strQuery, body.username, (err, results) => {
         if (err) return res.cc('登录失败');
         if (!results) return res.cc('用户不存在');
-        if (briypt.hashSync(body.password) == results[0].password) {
-            res.cc('登录成功', 0);
-        } else {
-            res.cc('登录失败');
-        }
+        if (results.length != 1) return res.cc('登录失败')
+        if (!briypt.compareSync(body.password, results[0].password)) return res.cc('密码错误');
+        const user = {...results[0], password: '', user_pic: '' }
+        res.send({
+            status: 0,
+            msg: '登陆成功',
+            token: 'Bearer ' + tokenStr
+        });
     });
 }
 exports.regUser = function(req, res) {
