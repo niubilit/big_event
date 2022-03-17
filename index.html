@@ -12,22 +12,24 @@
 <body>
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
-            <div class="layui-logo layui-hide-xs layui-bg-black">layout demo</div>
+            <div class="layui-logo layui-hide-xs layui-bg-black">
+                <img src="./assets/images/logo.png" alt="" />
+            </div>
             <!-- 头部区域（可配合layui 已有的水平导航） -->
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item layui-hide layui-show-md-inline-block">
                     <a href="javascript:;">
-                        <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img"> tester
+                        <img src="//tva1.sinaimg.cn/crop.0.0.118.118.180/5db11ff4gw1e77d3nqrv8j203b03cweg.jpg" class="layui-nav-img">
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="">Your Profile</a></dd>
-                        <dd><a href="">Settings</a></dd>
-                        <dd><a href="">Sign out</a></dd>
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                        <dd><a href="">退出登录</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
                     <a href="javascript:;">
-                        <i class="layui-icon layui-icon-more-vertical"></i>
+                        <i class="layui-icon layui-icon-logout"></i>退出
                     </a>
                 </li>
             </ul>
@@ -36,20 +38,26 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <ul class="layui-nav layui-nav-tree" lay-filter="test" lay-shrink="all">
                     <li class="layui-nav-item">
-                        <a class="" href="javascript:;">首页</a>
+                        <a class="" href="./home/dashboard.html" target="fm">
+                            <i class="layui-icon layui-icon-home"></i> 首页
+                        </a>
                     </li>
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">文章管理</a>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <i class="layui-icon layui-icon-form"></i> 文章管理
+                        </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">文章类别</a></dd>
-                            <dd><a href="javascript:;">文章列表</a></dd>
-                            <dd><a href="javascript:;">发布文章</a></dd>
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>文章类别</a></dd>
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>文章列表</a></dd>
+                            <dd><a href="javascript:;"><i class="layui-icon layui-icon-app"></i>发布文章</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a href="javascript:;">个人中心</a>
+                        <a href="javascript:;">
+                            <i class="layui-icon layui-icon-username"></i>个人中心
+                        </a>
                         <dl class="layui-nav-child">
                             <dd><a href="javascript:;">基本资料</a></dd>
                             <dd><a href="javascript:;">更换头像</a></dd>
@@ -62,7 +70,7 @@
 
         <div class="layui-body">
             <!-- 内容主体区域 -->
-            <div style="padding: 15px;">内容主体区域。记得修改 layui.css 和 js 的路径</div>
+            <iframe src="" name="fm" frameborder="0"></iframe>
         </div>
 
         <div class="layui-footer">

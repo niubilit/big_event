@@ -15,7 +15,7 @@ $(function() {
                     return layer.msg(response.msg, { time: 2000 });
                 }
                 layer.msg(response.msg, { time: 2000 }, function() {
-                    location.href = '../../index.html';
+                    location.href = 'index.html';
                 });
             }
         });
