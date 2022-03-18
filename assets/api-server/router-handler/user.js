@@ -30,7 +30,6 @@ exports.regUser = function(req, res) {
             return res.cc('用户名已存在');
         }
         body.password = briypt.hashSync(body.password, 10);
-        console.log(body);
         dp.query(strSet, { username: body.username, password: body.password }, function(err, results) {
             // 执行 SQL 语句失败
             if (err) return res.send({ status: 1, message: err.message })
