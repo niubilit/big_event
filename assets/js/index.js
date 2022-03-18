@@ -1,6 +1,5 @@
-const breakLogin = function() {
-    localStorage.removeItem('token');
-    location.href = 'login.html';
+document.onmousedown = function(even) {
+    even.preventDefault();
 }
 const renewAvater = function(user) {
     if (user.user_pic) {
@@ -17,8 +16,7 @@ const getUserInfo = function() {
         url: "/my/userinfo",
         success: function(response) {
             if (response.status != 0) {
-                return breakLogin();
-                // return   layer.msg('获取用户信息失败');
+                return layer.msg('获取用户信息失败');
             }
             console.log(response);
             renewAvater(response.data);
@@ -33,7 +31,8 @@ $(function() {
     // ---------
     $('.break').on('click', () => {
         layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function(index) {
-            breakLogin()
+            localStorage.removeItem('token');
+            location.href = 'login.html';
             layer.close(index);
         });
     })
