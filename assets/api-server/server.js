@@ -22,16 +22,15 @@ app.use(function(req, res, next) {
 app.use(expressJwt({ secret: config.jwtSecretKey, algorithms: ['HS256'] }).unless({ path: { url: '/bigEvent/api/login', methods: ['POST'] } }));
 
 // 监听http访问
+
 app.use('/bigEvent/api/', userRouter);
 app.use('/bigEvent/my/', userinfo);
 
 // 错误中间件
 app.use((err, req, res, next) => {
-    if (err instanceof joi.ValidationError) {
-        return res.cc(err);
-    }
+    if (err instanceof joi.ValidationError) return res.cc(err);
     if (err.name == 'UnauthorizedError') return res.cc('身份认证失败')
-    res.cc(err)
+    res.cc(err);
 });
 
 app.listen(8088, () => {
