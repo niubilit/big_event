@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const dp = require('../dp/index');
+const bcrypt = require('bcryptjs');
 exports.getUserInfo = function(req, res) {
     const sql = 'select id, username, nickname, email, user_pic from ev_users where id = ?';
     dp.query(sql, req.user.id, function(err, results) {
@@ -19,10 +20,27 @@ exports.upDateUserInfo = function(req, res) {
     dp.query(sql, [body, body.id], function(err, results) {
         if (err) return res.cc(err);
         if (results.affectedRows != 1) return res.cc('修改用户信息失败');
+        console.log(results);
         res.send({
             status: 0,
-            msg: '修改成功'
+            msg: '修改成功',
+            date: body
         })
     })
+}
 
+exports.updatepwd = function(req, res) {
+    const body = req.body;
+    const sql = 'select * from ev_users where id = ?';
+    const setSql = 'update ev_users set password = ? where id = ?';
+    dp.query(sql, req.user.id, function(err, results) {
+        if (err) return res.cc(err);
+        if (results.length != 1) return res.cc('修改失败');
+        if (!bcrypt.compareSync(body.oldPwd, results[0].password)) return res.cc('新密码和旧密码相同')
+        dp.query(setSql, [bcrypt.hashSync(body.newPwd, 10), req.user.id], function(err, results) {
+            if (err) return res.cc(err);
+            if (results.affectedRows != 1) return res.cc('修改失败');
+            return res.cc('修改成功', 0);
+        });
+    });
 }
