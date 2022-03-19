@@ -36,7 +36,7 @@ exports.updatepwd = function(req, res) {
     dp.query(sql, req.user.id, function(err, results) {
         if (err) return res.cc(err);
         if (results.length != 1) return res.cc('修改失败');
-        if (!bcrypt.compareSync(body.oldPwd, results[0].password)) return res.cc('新密码和旧密码相同')
+        if (!bcrypt.compareSync(body.oldPwd, results[0].password)) return res.cc('旧密码错误')
         dp.query(setSql, [bcrypt.hashSync(body.newPwd, 10), req.user.id], function(err, results) {
             if (err) return res.cc(err);
             if (results.affectedRows != 1) return res.cc('修改失败');
