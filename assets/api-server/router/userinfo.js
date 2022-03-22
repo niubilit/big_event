@@ -7,5 +7,6 @@ const schema = require('../schema/user');
 router.get('/userinfo', userinfo_handler.getUserInfo);
 router.post('/userinfo', expressJoi(schema.updata_userinfo_schema), userinfo_handler.upDateUserInfo);
 router.post('/updatepwd', expressJoi(schema.update_password_schema), userinfo_handler.updatepwd);
+router.post('/userdate/avatar', expressJoi(schema.update_avatar_schema), userinfo_handler.updateAvatar);
 
 module.exports = router;

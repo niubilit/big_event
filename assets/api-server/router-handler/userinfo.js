@@ -44,3 +44,15 @@ exports.updatepwd = function(req, res) {
         });
     });
 }
+
+exports.updateAvatar = function(req, res) {
+    const sql = 'update ev_users ste user_pic = ? where id = ?';
+    dp.query(sql, [req.body.avater, req.user.id], function(err, results) {
+        if (err) return res.cc(err);
+        if (results.affectedRows) return res.cc('修改头像失败');
+        res.send({
+            status: 0,
+            msg: '修改成功'
+        })
+    })
+}

@@ -9,10 +9,6 @@ $(function() {
     }
     let cropper = new Cropper($('#image')[0], option);
 
-    // $('#reset').on('click', function() {
-    //     cropper.reset();
-    // });
-
     $('#fileImg').on('click', function() {
         $('#file').click();
     });
@@ -23,56 +19,32 @@ $(function() {
     });
 
     $('#stroage').on('click', function() {
-        console.log(cropper('getCroppedCanvas', {
-            width: 100,
-            height: 100
-        }));
+        let fileReader = new FileReader()
+        let canvas = cropper.getCroppedCanvas({
+            imageSmoothingQuality: "high",
+        });
+        console.log(canvas, canvas.getImageData);
+        canvas.toBlob(function(blobObj) {
+            let file = new window.File([blobObj], {
+                type: 'image/png'
+            });
+            console.log(file);
+        })
     });
+    console.log(cropper);
 
-    // var $image = $("#image");
-    // let option = {
-    //     aspectRatio: 1,
-    //     dragMode: 'move',
-    //     viewMode: 1,
-    //     cropBoxResizable: false,
-    //     preview: '.img-preview',
-    //     // ready: function() {
-    //     //     $("#clipImg").on("click", function() {
-    //     //         $image.cropper('getCroppedCanvas', {
-    //     //             width: 140, // 裁剪后的长宽
-    //     //             height: 140
-    //     //         }).toBlob(function(blob) {
-    //     //             $("#showImg").attr('src', URL.createObjectURL(blob)); // 将裁剪后的图片放到指定标签展示
-    //     //         });
-    //     //     });
-    //     // }
-    // }
-    // $image.cropper(option);
-    // $('#btnChooseImage').on('click', function() {
-    //     console.log(123);
-    //     $('#file').click();
-    // });
-    // $('#file').on('change', function(even) {
-    //     let fileList = even.target.files;
-    //     if (fileList.length == 0) return layer.msg('请选择图片！');
-    //     let newImgURL = URL.createObjectURL(fileList[0]);
-    //     $image
-    //         .cropper('destroy') // 销毁旧的裁剪区域
-    //         .attr('src', newImgURL) // 重新设置图片路径
-    //         .cropper(option); // 重新初始化裁剪区域
-    //     let dataURL = $image.cropper('getCroppedCanvas', {
-    //         width: 100, // 裁剪后的长宽
-    //         height: 100
-    //     })
+    // cropper 剪切转base 失败 方法不存在
 
-    //     console.log($('#image').cropper());
-    //     // console.log($image.cropper('getCroppedCanvas', {
-    //     //     width: 100,
-    //     //     height: 100
-    //     // }).toBlob);
-
-
-
-    //     console.log(dataURL);
-    // })
+    function getBase64Image(context, x1, y1, x2, y2) {
+        var dataImg = context.getImageData(x1, y1, x2, y2);
+        var canvas2 = document.createElement("canvas");
+        var context2 = canvas2.getContext("2d");
+        var width = Math.abs(x1 - x2);
+        var height = Math.abs(y1 - y2);
+        canvas2.width = width;
+        canvas2.height = height;
+        context2.putImageData(dataImg, 0, 0, 0, 0, width, height);
+        var res = canvas2.toDataURL('image/jpeg');
+        return res;
+    }
 });
