@@ -60,6 +60,24 @@ $(function() {
                 initArtCateList()
             }
         });
+    });
+
+    $('.layui-table').on('click', '.formDelete', function(even) {
+        even.preventDefault();
+        let This = $(this);
+        let id = $(this).attr('data-id');
+        layer.config('确认删除?', { icon: 3, title: '提示' }, function(index) {
+            $.ajax({
+                type: "get",
+                url: "/my/article/deletecate/" + id,
+                success: function(response) {
+                    if (response.status != 0) return layer.msg('删除失败');
+                    layer.msg('修改成功');
+                    initArtCateList()
+                }
+            });
+            layer.close(index);
+        })
     })
 })
 

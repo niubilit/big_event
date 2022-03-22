@@ -19,3 +19,7 @@ body {
 #form-edit {
     padding: 20px 30px 0 0;
 }
+
+.user-id {
+    display: none !important;
+}
