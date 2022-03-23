@@ -24,9 +24,9 @@ app.use(expressJwt({ secret: config.jwtSecretKey, algorithms: ['HS256'] }).unles
 
 // 监听http访问
 
-app.use('/bigEvent/api/', userRouter); // 登录和注册分支
-app.use('/bigEvent/my/', userinfo); // 用户设置分支
-app.use('/my/article/', artcate); // 文章管理分支
+app.use('/bigEvent/api/', userRouter);
+app.use('/bigEvent/my/', userinfo);
+app.use('/bigEvent/my/article/', artcate);
 
 // 错误中间件
 app.use((err, req, res, next) => {
