@@ -8,3 +8,18 @@ body {
     padding: 15px;
     background-color: #f2f3f5;
 }
+
+
+/* .layui-form select {
+    display: block !important;
+    width: 180px;
+    padding: 10px 20px 10px 5px;
+    border: 1px solid #eee;
+    background-color: transparent;
+}
+
+.layui-form select option {
+    display: inline-block;
+    padding-left: 10px;
+    color: #999;
+} */
