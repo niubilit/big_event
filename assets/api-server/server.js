@@ -7,6 +7,7 @@ const joi = require('joi');
 const expressJwt = require('express-jwt');
 const config = require('./schema/config');
 const artcate = require('./router/artcate');
+const article = require('./router/article');
 
 // 配置中间件
 app.use(cors());
@@ -26,8 +27,8 @@ app.use(expressJwt({ secret: config.jwtSecretKey, algorithms: ['HS256'] }).unles
 
 app.use('/bigEvent/api/', userRouter);
 app.use('/bigEvent/my/', userinfo);
-app.use('/bigEvent/my/article/', artcate);
-
+app.use('/bigEvent/my/artcate/', artcate);
+// app.use('/bigEvent/my/art')
 // 错误中间件
 app.use((err, req, res, next) => {
     if (err instanceof joi.ValidationError) return res.cc(err);

@@ -1,6 +1,8 @@
 $(function() {
     let indexAdd = undefined;
     let indexEdit = undefined;
+    let id = undefined;
+    let jqThis = null;
     initArtCateList();
     // 添加 表单数据
     $('#add-cate').on('click', function() {
@@ -16,7 +18,7 @@ $(function() {
         new Promise((resolve, reject) => {
             $.ajax({
                 type: "post",
-                url: "/my/article/addcates",
+                url: "/my/artcate/addcates",
                 data: $(this).serialize(),
                 success: function(response) {
                     if (response.status != 0) {
@@ -38,10 +40,10 @@ $(function() {
         })
     });
     // 修改对应的 表单数据 事件委托
-    let id = undefined;
     $('.layui-table').on('click', '.formSet', function(even) {
         even.preventDefault();
         id = $(this).attr('data-id');
+        jqThis = $(this);
         indexEdit = layer.open({
             type: 1,
             area: ['500px', '250px'],
@@ -52,23 +54,23 @@ $(function() {
     });
     $('body').on('submit', '#form-edit', function(even) {
         even.preventDefault();
-        console.log($(this).serialize());
+        const parent = jqThis.parents('tr');
         new Promise((resolve) => {
             $.ajax({
                 type: "post",
-                url: "/my/article/updatecate",
+                url: "/my/artcate/updatecate",
                 data: `id=${id}&` + $(this).serialize(),
                 success: function(response) {
-                    console.log(response);
                     if (response.status != 0) return layer.msg('修改分类失败');
                     layer.msg('修改分类成功');
                     layer.close(indexEdit);
-                    resolve();
+                    resolve(response);
                 }
             });
-        }).then(() => {
-            parent.find('.name').val(data.name);
-            parents.find('.alias').val(data.alias);
+        }).then((res) => {
+            console.log(parent);
+            parent.find('.name').html(res.data.name);
+            parent.find('.alias').html(res.data.alias);
         });
     });
     // 删除
@@ -78,7 +80,7 @@ $(function() {
         layer.confirm('确认删除?', { icon: 3, title: '提示' }, function(index) {
             $.ajax({
                 type: "get",
-                url: "/my/article/deletecate/" + id,
+                url: "/my/artcate/deletecate/" + id,
                 success: function(response) {
                     if (response.status != 0) return layer.msg('删除失败');
                     layer.msg('删除成功');
@@ -92,7 +94,7 @@ $(function() {
     function initArtCateList() {
         $.ajax({
             type: "get",
-            url: "/my/article/cates",
+            url: "/my/artcate/cates",
             success: function(response) {
                 $('tbody').html(template('tpl-table', response));
                 console.log(response);

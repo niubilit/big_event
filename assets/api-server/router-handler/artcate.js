@@ -37,7 +37,11 @@ exports.updateCate = (req, res) => {
         dp.query(sql, [body.name, body.alias, body.id], function(err, results) {
             if (err) return res.cc(err);
             if (results.affectedRows != 1) return res.cc('更新文章失败');
-            res.cc('更新文章成功', 0);
+            res.send({
+                status: 0,
+                msg: '更新文章成功',
+                data: body
+            });
         })
     })
 }
@@ -50,6 +54,20 @@ exports.deleteArticleCates = (req, res) => {
         if (results.affectedRows != 1) return res.cc('删除文章分类失败');
         res.cc('删除文章分类成功', 0);
     })
+}
+
+exports.getArtCateById = (req, res) => {
+    const params = req.params.id;
+    const sql = 'select * from ev_artcle_cate where id = ?';
+    dp.query(sql, params, function(err, results) {
+        if (err) return res.cc(err);
+        if (results.length != 1) return res.cc('获取文章分类数据失败');
+        res.send({
+            status: 0,
+            msg: '获取文章分类数据成功',
+            data: results[0]
+        });
+    });
 }
 
 function readyArticleCates(req, res) {

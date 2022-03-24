@@ -21,8 +21,14 @@ $(function() {
             pub_date: '2022-03-24 10:27',
             stats: '已发布',
             cate_name: '股市'
+        }, {
+            id: 3,
+            title: 'adsfasdf',
+            pub_date: '2022-03-26 23:32',
+            stats: '已发布',
+            cate_name: 'cs'
         }],
-        total: 5
+        total: 3
     }
     const initArtList = function() {
         $.ajax({
@@ -94,7 +100,12 @@ $(function() {
             elem: 'pageBox',
             count: total, //总数据调试
             limit: query.pagesize, // 一页显示几条数据
-            curr: query.pagenum // 默认被选择的分页
+            curr: query.pagenum, // 默认被选择的分页
+            jump: function(obj, first) {
+                if (first) return 0;
+                query.pagenum = obj.curr;
+                initArtList();
+            }
         });
     }
 
