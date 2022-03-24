@@ -38,8 +38,10 @@ $(function() {
         })
     });
     // 修改对应的 表单数据 事件委托
+    let id = undefined;
     $('.layui-table').on('click', '.formSet', function(even) {
         even.preventDefault();
+        id = $(this).attr('data-id');
         indexEdit = layer.open({
             type: 1,
             area: ['500px', '250px'],
@@ -48,16 +50,16 @@ $(function() {
         });
 
     });
-    $('body').on('submit', $('#submit-set'), function(even) {
+    $('body').on('submit', '#form-edit', function(even) {
         even.preventDefault();
-        let This = $(this);
-        let data = null;
-        new Promise((resolve, reject) => {
+        console.log($(this).serialize());
+        new Promise((resolve) => {
             $.ajax({
                 type: "post",
                 url: "/my/article/updatecate",
-                data: $(this).serialize(),
+                data: `id=${id}&` + $(this).serialize(),
                 success: function(response) {
+                    console.log(response);
                     if (response.status != 0) return layer.msg('修改分类失败');
                     layer.msg('修改分类成功');
                     layer.close(indexEdit);
@@ -65,7 +67,8 @@ $(function() {
                 }
             });
         }).then(() => {
-            // This.parents('tr').
+            parent.find('.name').val(data.name);
+            parents.find('.alias').val(data.alias);
         });
     });
     // 删除
