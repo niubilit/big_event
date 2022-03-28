@@ -9,7 +9,7 @@ const nickname = joi.string().required();
 const email = joi.string().email().required();
 
 // avater 
-const avater = joi.string().dataUri().required();
+const avatar = joi.string().dataUri().required();
 exports.reg_login_schema = {
     body: {
         username,
@@ -34,6 +34,6 @@ exports.update_password_schema = {
 
 exports.update_avatar_schema = {
     body: {
-        avater
+        avatar
     }
 }

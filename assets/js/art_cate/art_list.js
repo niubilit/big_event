@@ -45,7 +45,7 @@ $(function() {
     const initCates = function() {
         $.ajax({
             type: "get",
-            url: "/my/article/cates",
+            url: "/my/artcate/cates",
             success: function(response) {
                 if (response.status != 0) return false
                 let dl = $('div.layui-unselect').eq(0).find('.layui-anim');
@@ -100,12 +100,15 @@ $(function() {
             elem: 'pageBox',
             count: total, //总数据调试
             limit: query.pagesize, // 一页显示几条数据
+            limits: ['5', '10', '15', '20'],
             curr: query.pagenum, // 默认被选择的分页
             jump: function(obj, first) {
                 if (first) return 0;
                 query.pagenum = obj.curr;
-                initArtList();
-            }
+                query.pagesize = obj.limit;
+                // initArtList();
+            },
+            layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],
         });
     }
 

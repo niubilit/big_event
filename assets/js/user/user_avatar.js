@@ -4,7 +4,6 @@ $(function() {
         viewMode: 1,
         dragMode: 'move',
         movable: false,
-        cropBoxResizable: false,
         preview: '.img-preview'
     }
     let cropper = new Cropper($('#image')[0], option);
@@ -19,32 +18,22 @@ $(function() {
     });
 
     $('#stroage').on('click', function() {
-        let fileReader = new FileReader()
         let canvas = cropper.getCroppedCanvas({
             imageSmoothingQuality: "high",
         });
-        console.log(canvas, canvas.getImageData);
-        canvas.toBlob(function(blobObj) {
-            let file = new window.File([blobObj], {
-                type: 'image/png'
-            });
-            console.log(file);
-        })
+        let avatar = canvas.toDataURL('image/jpg');
+        $.ajax({
+            type: "post",
+            url: "/my/update/avatar",
+            data: {
+                avatar
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.status != 0) return layer.msg('修改头像失败');
+                layer.msg('修改成功');
+                window.parent.getUserInfo()
+            }
+        });
     });
-    console.log(cropper);
-
-    // cropper 剪切转base 失败 方法不存在
-
-    function getBase64Image(context, x1, y1, x2, y2) {
-        var dataImg = context.getImageData(x1, y1, x2, y2);
-        var canvas2 = document.createElement("canvas");
-        var context2 = canvas2.getContext("2d");
-        var width = Math.abs(x1 - x2);
-        var height = Math.abs(y1 - y2);
-        canvas2.width = width;
-        canvas2.height = height;
-        context2.putImageData(dataImg, 0, 0, 0, 0, width, height);
-        var res = canvas2.toDataURL('image/jpeg');
-        return res;
-    }
 });

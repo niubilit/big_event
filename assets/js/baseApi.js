@@ -8,7 +8,7 @@ $.ajaxPrefilter(function(options) {
     }
     options.url = 'http://127.0.0.1:8088/bigEvent' + options.url;
     options.complete = function(res) {
-        if (!res.responseJSON || res.responseJSON.msg == '登录失败' && res.responseJSON.status == 1) {
+        if (res.responseJSON.msg == '登录失败' && res.responseJSON.status == 1) {
             localStorage.removeItem('token');
             location.href = '../../login.html';
         }

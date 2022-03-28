@@ -4,7 +4,9 @@ document.onmousedown = function(even) {
 
 function renewAvater(user) {
     if (user.user_pic) {
-        $('.layui-nav-img').html(user.user_pic).show();
+        console.log(user.user_pic);
+        $('.layui-nav-img').attr('src', user.user_pic).show();
+        $('.text-avater').hide()
     } else {
         $('.text-avater').html((user.nickname ? user.nickname : user.username)[0].toUpperCase()).show();
         $('#user-name').html(user.nickname ? user.nickname : user.username)
