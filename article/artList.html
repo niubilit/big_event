@@ -33,8 +33,9 @@
             <!-- 主题内容 -->
             <table class="layui-table">
                 <colgroup>
-                    <col width="550" />
+                    <col width="150" />
                     <col width="70" />
+                    <col />
                     <col />
                     <col />
                     <col width="150" />
@@ -45,6 +46,7 @@
                         <th>分类</th>
                         <th>发布时间</th>
                         <th>状态</th>
+                        <th>作者</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -60,8 +62,9 @@
         <tr>
             <td class="title">{{$value.title}}</td>
             <td class="cate_name">{{$value.cate_name}}</td>
-            <td class="pub_date">{{$value.pub_date|dateFormat}}</td>
-            <td class="stats">{{$value.stats}}</td>
+            <td class="pub_date">{{$value.pub_date}}</td>
+            <td class="stats">{{$value.state}}</td>
+            <td class="author_id">{{$value.author_name}}</td>
             <td>
                 <button class="layui-btn layui-btn-xs layui-btn-normal formSet" data-id="{{$value.id}}">编辑</button>
                 <button class="layui-btn layui-btn-xs layui-btn-danger formDelete" data-id="{{$value.id}}">删除</button>
@@ -75,6 +78,29 @@
         {{each data}}
         <option value="{{$value.id}}">{{$value.name}}</option>
         {{/each}}
+    </script>
+
+    <script type="text/html" id="tpl-revise">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章类别</label>
+                <div class="layui-input-block">
+                    <select name="cate_id" lay-verify="required"></select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章内容</label>
+                <div class="layui-input-block">
+                    <textarea name="content" placeholder="请输入内容" class="layui-textarea" id="textCount"></textarea>
+                </div>
+            </div>
+        </form>
     </script>
 
     <script type="text/html" id="layui-option"></script>

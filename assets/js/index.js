@@ -4,7 +4,6 @@ document.onmousedown = function(even) {
 
 function renewAvater(user) {
     if (user.user_pic) {
-        console.log(user.user_pic);
         $('.layui-nav-img').attr('src', user.user_pic).show();
         $('.text-avater').hide()
     } else {
