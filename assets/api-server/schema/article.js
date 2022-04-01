@@ -27,3 +27,10 @@ exports.add_article_schema = {
         state: state.required()
     }
 }
+
+exports.query_article_schema = {
+    query: {
+        cate_id: cate_id.required(),
+        state
+    }
+}

@@ -13,17 +13,15 @@ $(function() {
             }
         });
     }
-    const initArtList = function() { // 渲染文章列表
+    const initArtList = function(callback) { // 渲染文章列表
         $.ajax({
             type: "get",
             url: "/my/article/list",
             data: query,
             success: function(response) {
-                console.log(response);
                 if (response.status != 0) return false
                 $('tbody').html(template('tpl-table', response))
-                initCates();
-                renderPage()
+                callback && callback(response)
             }
         });
     }
@@ -33,13 +31,14 @@ $(function() {
             elem: 'pageBox',
             count: total, //总数据调试
             limit: query.pagesize, // 一页显示几条数据
-            limits: ['5', '10', '15', '20'],
+            limits: ['5', '10', '15'],
             curr: query.pagenum, // 默认被选择的分页
             jump: function(obj, first) {
                 if (first) return 0;
                 query.pagenum = obj.curr;
                 query.pagesize = obj.limit;
-                // initArtList();
+                console.log(obj.limit);
+                initArtList();
             },
             layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],
         });
@@ -69,9 +68,31 @@ $(function() {
 
     let indexEdit = null;
 
-    initArtList();
+    initArtList((item) => renderPage(item.total));
+    initCates();
 
-    $('tbody').on('click', '.formSet', (even) => {
+
+    $('#form-search').on('submit', function(even) {
+        even.preventDefault();
+        let cate_id = $('[name=cate_id]')[0]
+        let state = $('[name=state]')[0]
+        let data = {
+            state: state.children[state.selectedIndex].value,
+            cate_id: cate_id.children[cate_id.selectedIndex].value
+        }
+        $.ajax({
+            type: "get",
+            url: "/my/article/listQuery",
+            data,
+            success: function(response) {
+                console.log(response);
+                if (response.status != 0) return layer.msg('获取失败');
+            }
+        });
+    })
+
+
+    $('tbody').on('click', '.formSet', (even) => { // 编辑弹窗
         even.preventDefault();
         indexEdit = layer.open({
             type: 1,
