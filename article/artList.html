@@ -21,7 +21,7 @@
                 </div>
                 <div class="layui-inline">
                     <select name="state" autofocus="off">
-                        <option value="*">所有状态</option>
+                        <option value="">所有状态</option>
                         <option value="已发布">已发布</option>
                         <option value="草稿">草稿</option>
                       </select>
@@ -74,7 +74,7 @@
     </script>
 
     <script type="text/html" id="tpl-cate">
-        <option value="*">所有分类</option>
+        <option value="">所有分类</option>
         {{each data}}
         <option value="{{$value.id}}">{{$value.name}}</option>
         {{/each}}

@@ -30,7 +30,9 @@ exports.add_article_schema = {
 
 exports.query_article_schema = {
     query: {
-        cate_id: cate_id.required(),
+        pagenum,
+        pagesize: pagenum,
+        cate_id,
         state
     }
 }

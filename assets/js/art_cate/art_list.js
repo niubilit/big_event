@@ -37,29 +37,29 @@ $(function() {
                 if (first) return 0;
                 query.pagenum = obj.curr;
                 query.pagesize = obj.limit;
-                console.log(obj.limit);
-                initArtList();
+                initArtList(); // 渲染对应页面的数据
             },
             layout: ['count', 'limit', 'prev', 'page', 'next', 'skip'],
         });
     }
-    template.defaults.imports.dateFormat = function(date) {
-        const dt = new Date();
+    const getSelectDate = () => {
+        let obj = {
+            pagenum: 1,
+            pagesize: 5
+        };
+        let cate_id = $('[name=cate_id]')[0];
+        let state = $('[name=state]')[0];
 
-        function padZero(n) {
-            return n < 10 ? '0' + n : n;
-        }
-        let y = dt.getFullYear();
-        let m = padZero(dt.getMonth() + 1);
-        let d = padZero(dt.getDate());
-        let hh = padZero(dt.getHours());
-        let mm = padZero(dt.getMinutes());
-        let ss = padZero(dt.getSeconds());
-        return y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss;
+        cate_id = cate_id.children[cate_id.selectedIndex].value;
+        state = state.children[state.selectedIndex].value;
+
+        cate_id ? obj.cate_id = cate_id : 0;
+        state ? obj.state = state : 0;
+        return obj;
     }
     let query = {
         pagenum: 1, // 页码默认为1
-        pagesize: 5 // 每页显示几条数据，默认每页显示2条
+        pagesize: 5, // 每页显示几条数据，默认每页显示2条
     };
     // cate_id  文章分类的 id
     // state  文章的发布状态
@@ -74,22 +74,27 @@ $(function() {
 
     $('#form-search').on('submit', function(even) {
         even.preventDefault();
-        let cate_id = $('[name=cate_id]')[0]
-        let state = $('[name=state]')[0]
-        let data = {
-            state: state.children[state.selectedIndex].value,
-            cate_id: cate_id.children[cate_id.selectedIndex].value
+        let data = getSelectDate();
+        if (!data.state && !data.cate_id) {
+            query = {
+                pagenum: 1,
+                pagesize: 5
+            }
+            initArtList((item) => renderPage(item.total));
+            return 0;
         }
         $.ajax({
             type: "get",
             url: "/my/article/listQuery",
             data,
             success: function(response) {
-                console.log(response);
                 if (response.status != 0) return layer.msg('获取失败');
+                console.log(response);
+                $('tbody').html(template('tpl-table', response))
+                renderPage(response.total);
             }
         });
-    })
+    });
 
 
     $('tbody').on('click', '.formSet', (even) => { // 编辑弹窗
@@ -100,5 +105,10 @@ $(function() {
             title: '修改文章分类',
             content: template('tpl-revise', {})
         });
+    });
+
+    $('tbody').on('click', '.formDelete', function(even) {
+        even.preventDefault();
+        console.log(123);
     })
-})
+});
