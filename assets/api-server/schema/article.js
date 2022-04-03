@@ -3,12 +3,14 @@ const joi = require('joi');
 
 const pagenum = joi.number().integer().min(1).required();
 
-
 const title = joi.string().min(1).required();
 const cate_id = joi.number().integer().min(1);
 const content = joi.string().required().allow('');
 const state = joi.string().valid('已发布', '草稿');
 const cate_name = joi.string().required();
+
+const id = joi.number().integer().min(1).required();
+
 exports.getList_article_schema = {
     query: {
         pagenum,
@@ -34,5 +36,11 @@ exports.query_article_schema = {
         pagesize: pagenum,
         cate_id,
         state
+    }
+}
+
+exports.delete_id_schema = {
+    params: {
+        id
     }
 }

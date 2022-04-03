@@ -64,8 +64,9 @@
             <td class="cate_name">{{$value.cate_name}}</td>
             <td class="pub_date">{{$value.pub_date}}</td>
             <td class="stats">{{$value.state}}</td>
-            <td class="author_id">{{$value.author_name}}</td>
+            <td class="author_name">{{$value.author_name}}</td>
             <td>
+                <input type="hidden" id="{{$value.id}}">
                 <button class="layui-btn layui-btn-xs layui-btn-normal formSet" data-id="{{$value.id}}">编辑</button>
                 <button class="layui-btn layui-btn-xs layui-btn-danger formDelete" data-id="{{$value.id}}">删除</button>
             </td>

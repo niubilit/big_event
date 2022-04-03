@@ -16,11 +16,12 @@ $(function() {
     const initArtList = function(callback) { // 渲染文章列表
         $.ajax({
             type: "get",
-            url: "/my/article/list",
+            url: "/my/article/listQuery",
             data: query,
             success: function(response) {
                 if (response.status != 0) return false
                 $('tbody').html(template('tpl-table', response))
+                renderPage(response.total);
                 callback && callback(response)
             }
         });
@@ -68,25 +69,25 @@ $(function() {
 
     let indexEdit = null;
 
-    initArtList((item) => renderPage(item.total));
+    initArtList();
     initCates();
 
 
-    $('#form-search').on('submit', function(even) {
+    $('#form-search').on('submit', function(even) { // 查询指定项
         even.preventDefault();
-        let data = getSelectDate();
-        if (!data.state && !data.cate_id) {
+        query = getSelectDate();
+        if (!query.state && !query.cate_id) {
             query = {
                 pagenum: 1,
-                pagesize: 5
+                pagesize: 5,
             }
-            initArtList((item) => renderPage(item.total));
+            initArtList();
             return 0;
         }
         $.ajax({
             type: "get",
             url: "/my/article/listQuery",
-            data,
+            data: query,
             success: function(response) {
                 if (response.status != 0) return layer.msg('获取失败');
                 console.log(response);
@@ -107,8 +108,16 @@ $(function() {
         });
     });
 
-    $('tbody').on('click', '.formDelete', function(even) {
+    $('tbody').on('click', '.formDelete', function(even) { // 删除对应项
         even.preventDefault();
-        console.log(123);
+        const id = $(this).siblings('input').attr('id');
+        $.ajax({
+            type: "get",
+            url: "/my/article/delete/" + id,
+            success: function(response) {
+                if (response.status != 0) return layer.msg('删除失败');
+                initArtList();
+            }
+        });
     })
 });
