@@ -58,7 +58,6 @@ exports.deleteArticle = (req, res) => {
     const sql = 'update ev_articles set is_delete = 1 where id = ?';
     dp.query(sql, params.id, (err, results) => {
         if (err) return res.cc(err);
-        console.log(results);
         if (results.affectedRows != 1) return res.cc('删除文章失败');
         res.cc('删除文章成功', 0);
     })

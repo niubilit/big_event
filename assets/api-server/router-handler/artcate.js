@@ -50,7 +50,6 @@ exports.deleteArticleCates = (req, res) => {
     const sql = 'update ev_artcle_cate set is_delete = 1 where id = ?';
     dp.query(sql, req.params.id, function(err, results) {
         if (err) return res.cc(err);
-        console.log();
         if (results.affectedRows != 1) return res.cc('删除文章分类失败');
         res.cc('删除文章分类成功', 0);
     })

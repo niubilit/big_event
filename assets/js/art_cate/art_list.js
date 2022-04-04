@@ -104,13 +104,16 @@ $(function() {
             type: 1,
             area: ['600px', '550px'],
             title: '修改文章分类',
-            content: template('tpl-revise', {})
+            content: template('tpl-revise', )
         });
     });
 
     $('tbody').on('click', '.formDelete', function(even) { // 删除对应项
         even.preventDefault();
-        const id = $(this).siblings('input').attr('id');
+        const id = $(this).attr('data-id');
+        if ($('tbody tr').length == 1) {
+            query.pagenum - 1 < 1 ? 1 : query.pagenum--;
+        }
         $.ajax({
             type: "get",
             url: "/my/article/delete/" + id,
@@ -119,5 +122,5 @@ $(function() {
                 initArtList();
             }
         });
-    })
+    });
 });
